@@ -7,8 +7,8 @@
 * The contracts allow users to create arbitrary trading pairs (the swapped asset is called **position**).
 * The contracts emit events for deposit, withdraw and swap functions.
 * The contracts also provide a set of view functions, which can
-  - input asset A amount as the payment and the leverage => returns obtained asset B amount after the swap
-  - input asset A amount to exchange for and the leverage => returns asset A amount you should pay for
+  - input asset A amount as the payment and the leverage => output asset B amount after the swap
+  - input asset B amount to exchange for and the leverage => output asset A amount you should pay for
   - returns the remaining value of the account
 * Users can open/reduce and open/close positions in cross and isolated margin modes, respectively.
   - In cross margin mode, the user's position is shared across all token swaps.
@@ -84,8 +84,8 @@ Ran 2 test suites in 395.11ms (766.41ms CPU time): 40 tests passed, 0 failed, 0 
 $ anvil
 ```
 
-* Rename the file `.env.example` with `.env`, copy one of the private key from the `Anvil` and paste it in the `.env`.
-* Input this chosen private key into Metamask, and check whether there is some ethers in this account.
+* Rename the file `.env.example` with `.env`, copy one of the private key from the `Anvil` and paste it in `.env`.
+* Insert the chosen private key into Metamask and check whether there is some ETH in this account.
   - WARNING: DO NOT TAKE THE PRIVATE KEY AS YOUR OWN WALLET AND PUT THE REAL MONEY INTO IT.
 * After updating the `.env` file, run the following commands to load the env variables and deploy the contracts.
 ```bash
@@ -93,13 +93,13 @@ $ source .env
 $ forge script script/LeveragedAMMExchange.s.sol --rpc-url $RPC_URL --broadcast --private-key $PRIVATE_KEY
 ```
 
-* Now we need to write the new depoloyed addresses of the contracts to the Web GUI config.
-* Here, a simple script is provided to write the config (`html/contract-address.json`) automatically.
+* Now, we need to update the new contract addresses to the Web GUI config.
+* A simple script is provided to write the config (`html/contract-address.json`) automatically.
 ```bash
 $ node load-address.js
 ```
 
-* Install a VSCode extension [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer).
+* Install the VSCode extension: [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer).
   - This can open the HTML files in a convenient way - like running on a web server.
 * Right click on files: `html/exch-isolated-mode.html` & `html/exch-cross-mode.html` => `Open with Live Server`
   ![The screenshot of the Web GUI](html/snapshots/amm-exch-demo.png)
