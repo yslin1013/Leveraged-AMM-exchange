@@ -72,13 +72,14 @@ Ran 2 test suites in 395.11ms (766.41ms CPU time): 40 tests passed, 0 failed, 0 
 ```
 
 ### Deploy contracts on Local Network
-* To use the Web GUI provided, you should deploy the contracts on the local blockchain network by [Anvil](https://book.getfoundry.sh/reference/anvil/) in `Foundry`.
+* To use the Web GUI, you should deploy the contracts on local blockchain network by [Anvil](https://book.getfoundry.sh/reference/anvil/) in `Foundry`.
   - **src/ILeveragedAMMExchange.sol**
   - **src/LeveragedAMMExchangeCrossMode.sol**
   - **src/LeveragedAMMExchangeIsolatedMode.sol**
   - **src/tests/MyToken.sol**
 * Firstly, open another terminal and execute `Anvil` to run local network (by default setting).
-* Make sure you have [Metamask](https://metamask.io/) installed in the web browser, and change the network setting to `Local` (RPC URL => [http://127.0.0.1](http://127.0.0.1:8545))
+* Make sure you have [Metamask](https://metamask.io/) installed in the web browser
+  - Change the network setting to `Local` (RPC URL => [http://127.0.0.1](http://127.0.0.1:8545))
 ```bash
 $ anvil
 ```
@@ -86,13 +87,13 @@ $ anvil
 * Rename the file `.env.example` with `.env`, copy one of the private key from the `Anvil` and paste it in the `.env`.
 * Input this chosen private key into Metamask, and check whether there is some ethers in this account.
   - WARNING: DO NOT TAKE THE PRIVATE KEY AS YOUR OWN WALLET AND PUT THE REAL MONEY INTO IT.
-* After updating the `.env` file, run the following commands to load the environment variables and deploy the contracts.
+* After updating the `.env` file, run the following commands to load the env variables and deploy the contracts.
 ```bash
 $ source .env
 $ forge script script/LeveragedAMMExchange.s.sol --rpc-url $RPC_URL --broadcast --private-key $PRIVATE_KEY
 ```
 
-* Now we need to write the new depoloyed addresses of the contracts (outputted by Foundry) to the config for the Web GUI.
+* Now we need to write the new depoloyed addresses of the contracts to the Web GUI config.
 * Here, a simple script is provided to write the config (`html/contract-address.json`) automatically.
 ```bash
 $ node load-address.js
@@ -100,8 +101,8 @@ $ node load-address.js
 
 * Install a VSCode extension [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer).
   - This can open the HTML files in a convenient way - like running on a web server.
-* Right click on the HTML files: `html/exch-isolated-mode.html` & `html/exch-cross-mode.html` => `Open with Live Server`.
-* ![The screenshot of the Web GUI](html/snapshots/amm-exch-demo.png)
+* Right click on files: `html/exch-isolated-mode.html` & `html/exch-cross-mode.html` => `Open with Live Server`
+  ![The screenshot of the Web GUI](html/snapshots/amm-exch-demo.png)
 
 ## Static Analysis
 * The contracts have been scanned by the static analysis tool [Slither](https://github.com/crytic/slither).
