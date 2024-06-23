@@ -7,8 +7,8 @@
 * The contracts allow users to create arbitrary trading pairs (the swapped asset is called **position**).
 * The contracts emit events for deposit, withdraw and swap functions.
 * The contracts also provide a set of view functions, which can
-  - input asset A amount as the payment and the leverage => returns obtained asset B amount after the swap
-  - input asset A amount to exchange for and the leverage => returns asset A amount you should pay for
+  - input asset A amount as the payment and the leverage => output asset B amount after the swap
+  - input asset B amount to exchange for and the leverage => output asset A amount you should pay for
   - returns the remaining value of the account
 * Users can open/reduce and open/close positions in cross and isolated margin modes, respectively.
   - In cross margin mode, the user's position is shared across all token swaps.
