@@ -72,8 +72,6 @@ positionModeSelect.addEventListener("change", async () => {
 
 reducePositionSwitch.addEventListener("change", async () => {
   if (reducePositionSwitch.checked) {
-    const [positionValue, , targetDecimals] = await getPositionCrossValue();
-    swapTokenAmount.value = ethers.formatUnits(positionValue, targetDecimals);
     lockForCrossMode();
   }
 });

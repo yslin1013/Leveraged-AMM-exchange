@@ -45,6 +45,7 @@ async function loadServiceInfo() {
     );
     serviceInfo.maxLeverage = await contractInstances[serviceInfo.exchangeKey].MAX_LEVERAGE();
     serviceInfo.crossMode = "0";
+    serviceInfo.decimalDiff = BigInt(10 ** 3);
   } catch (error) {
     console.error(error);
   }
@@ -53,7 +54,7 @@ async function loadServiceInfo() {
 
 // ======= Functions triggered by Event listeners ======= //
 /**
- * For DOM objects declaration, refer to the `components.js` file.
+ * For DOM objects declaration, refer to the `components-cross.js` file.
  */
 
 async function connectWallet() {
@@ -113,10 +114,11 @@ async function withdrawTokens() {
       return;
     }
 
-    const normalizedAmount = ethers.parseUnits(
+    let normalizedAmount = ethers.parseUnits(
       tokenAmount,
       serviceInfo.collateralDecimals
     );
+    normalizedAmount -= serviceInfo.decimalDiff;
 
     let tx = await contractInstances[exchKey].withdraw(
       addressList[tokenSymbol],
@@ -232,6 +234,7 @@ async function requestTokenSwap() {
           );
           return;
         }
+        tokenAmount -= serviceInfo.decimalDiff;
       }
     } else {
       alert("please select the position mode");
@@ -264,7 +267,7 @@ async function requestTokenSwap() {
 
 // ======= Functions for loading data ======= //
 /**
- * For DOM objects declaration, refer to the `components.js` file.
+ * For DOM objects declaration, refer to the `components-cross.js` file.
  */
 
 async function refreshData() {
@@ -330,15 +333,14 @@ async function loadPositionCross(positionId) {
   const [
     tradingPairSymbol, collateralAmount, collateralWorthValue, positionValue, leverage
   ] = await contractInstances[exchSwapKey].positionCross(selectedAddress, positionId);
-  if (!removeDecimals(positionValue, targetDecimals, 13)) return;
 
   const newRow = document.createElement("tr");
   newRow.innerHTML = `
     <th scope="row"><h6><span class="badge bg-secondary">0</span></h5></th>
     <td><span class="badge bg-primary">${tradingPairSymbol}</span></td>
-    <td>${removeDecimals(collateralAmount, collateralDecimals, 8)}</td>
-    <td>${removeDecimals(collateralWorthValue, collateralDecimals, 8)}</td>
-    <td>${removeDecimals(positionValue, targetDecimals, 8)}</td>
+    <td>${removeDecimals(collateralAmount, collateralDecimals, 15)}</td>
+    <td>${removeDecimals(collateralWorthValue, collateralDecimals, 15)}</td>
+    <td>${removeDecimals(positionValue, targetDecimals, 15)}</td>
     <td><h6><span class="badge bg-danger">${leverage}x</span></h6></td>
     <td><h6><span class="badge bg-success">Open</span></h6></td>
   `;
