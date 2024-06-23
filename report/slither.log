@@ -1,0 +1,55 @@
+INFO:Detectors:
+LeveragedAMMExchange.deposit(address,uint256) (src/LeveragedAMMExchange.sol#133-137) ignores return value by IERC20Metadata(collateralToken).transferFrom(msg.sender,address(this),amount) (src/LeveragedAMMExchange.sol#134)
+LeveragedAMMExchange.withdraw(address,uint256) (src/LeveragedAMMExchange.sol#142-149) ignores return value by IERC20Metadata(collateralToken).transfer(msg.sender,amount) (src/LeveragedAMMExchange.sol#147)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+INFO:Detectors:
+LeveragedAMMExchange.positionsIsolated (src/LeveragedAMMExchange.sol#86) is never initialized. It is used in:
+        - LeveragedAMMExchange.getPositionWorthValue(address,address,address) (src/LeveragedAMMExchange.sol#226-235)
+        - LeveragedAMMExchange.getPositionIsolated(address,address,address,uint256) (src/LeveragedAMMExchange.sol#257-264)
+        - LeveragedAMMExchange.getPositionsIsolatedLength(address,address,address) (src/LeveragedAMMExchange.sol#271-278)
+        - LeveragedAMMExchange.getAccountRemainingValue(address,address,address) (src/LeveragedAMMExchange.sol#366-378)
+        - LeveragedAMMExchange._swapIsolatedOpen(address,address,uint256,uint8) (src/LeveragedAMMExchange.sol#436-463)
+        - LeveragedAMMExchange._swapIsolatedClose(address,address,uint256) (src/LeveragedAMMExchange.sol#469-485)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+INFO:Detectors:
+MyToken.constructor(string,string,uint8,uint256)._name (src/tests/MyToken.sol#9) shadows:
+        - ERC20._name (lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol#41) (state variable)
+MyToken.constructor(string,string,uint8,uint256)._symbol (src/tests/MyToken.sol#9) shadows:
+        - ERC20._symbol (lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol#42) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+INFO:Detectors:
+Reentrancy in LeveragedAMMExchange.deposit(address,uint256) (src/LeveragedAMMExchange.sol#133-137):
+        External calls:
+        - IERC20Metadata(collateralToken).transferFrom(msg.sender,address(this),amount) (src/LeveragedAMMExchange.sol#134)
+        State variables written after the call(s):
+        - balances[msg.sender][collateralToken] += amount (src/LeveragedAMMExchange.sol#135)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+INFO:Detectors:
+Pragma version^0.8.20 (lib/openzeppelin-contracts/contracts/interfaces/draft-IERC6093.sol#3) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version^0.8.20 (lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol#4) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version^0.8.20 (lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol#4) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version^0.8.20 (lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol#4) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version^0.8.20 (lib/openzeppelin-contracts/contracts/utils/Context.sol#4) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version^0.8.20 (lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol#4) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version^0.8.20 (src/LeveragedAMMExchange.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version^0.8.20 (src/tests/MyToken.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+solc-0.8.23 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+INFO:Detectors:
+Variable MyToken.DECIMALS (src/tests/MyToken.sol#7) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+INFO:Detectors:
+Variable LeveragedAMMExchange.getPairPrice(address,address).decimalsTokenA (src/LeveragedAMMExchange.sol#286) is too similar to LeveragedAMMExchange.getPairPrice(address,address).decimalsTokenB (src/LeveragedAMMExchange.sol#287)
+Variable LeveragedAMMExchange.getAmountOutFromIn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#317) is too similar to LeveragedAMMExchange.getAmountOutFromIn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#319)
+Variable LeveragedAMMExchange.getAmountCollateralReturn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#355) is too similar to LeveragedAMMExchange.getAmountInForOut(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#336)
+Variable LeveragedAMMExchange.getAmountCollateralReturn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#355) is too similar to LeveragedAMMExchange.getAmountOutFromIn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#319)
+Variable LeveragedAMMExchange.getAmountInForOut(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#337) is too similar to LeveragedAMMExchange.getAmountOutFromIn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#319)
+Variable LeveragedAMMExchange.getAmountInForOut(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#337) is too similar to LeveragedAMMExchange.getAmountCollateralReturn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#353)
+Variable LeveragedAMMExchange.getAmountOutFromIn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#317) is too similar to LeveragedAMMExchange.getAmountCollateralReturn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#353)
+Variable LeveragedAMMExchange.getAmountInForOut(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#337) is too similar to LeveragedAMMExchange.getAmountInForOut(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#336)
+Variable LeveragedAMMExchange.getAmountOutFromIn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#317) is too similar to LeveragedAMMExchange.getAmountInForOut(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#336)
+Variable LeveragedAMMExchange.getAmountCollateralReturn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#355) is too similar to LeveragedAMMExchange.getAmountCollateralReturn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#353)
+Variable LeveragedAMMExchange.getPairPrice(address,address).normalizedReserveA (src/LeveragedAMMExchange.sol#288) is too similar to LeveragedAMMExchange.getPairPrice(address,address).normalizedReserveB (src/LeveragedAMMExchange.sol#289)
+Variable LeveragedAMMExchange.createPair(address,address,uint256,uint256).tokenReserveA (src/LeveragedAMMExchange.sol#189) is too similar to LeveragedAMMExchange.createPair(address,address,uint256,uint256).tokenReserveB (src/LeveragedAMMExchange.sol#190)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#variable-names-too-similar
+INFO:Slither:. analyzed (10 contracts with 94 detectors), 28 result(s) found

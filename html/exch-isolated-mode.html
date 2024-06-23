@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>[IM] Leveraged AMM Exchange</title>
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Ethers.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.1/ethers.umd.js"
+    type="application/javascript"></script>
+
+</head>
+
+<body class="toggle-sidebar">
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">Leveraged AMM</span>
+      </a>
+    </div><!-- End Logo -->
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+        <li class="nav-item pe-3">
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" id="connect-btn" href="#">
+            <img src="assets/img/wallet.png" alt="Wallet">
+            <span class="d-none d-md-block ps-2" style="width: 130px; overflow: hidden; text-overflow: ellipsis;"
+              id="wallet-connect-btn">Connect Wallet</span>
+          </a><!-- End Wallet Image Icon -->
+        </li><!-- End Wallet Nav -->
+      </ul>
+    </nav><!-- End Icons Navigation -->
+  </header><!-- End Header -->
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Account Info <button type="button" class="btn btn-outline-primary btn-sm" id="refresh-btn">Refresh</button>
+        <span class="badge bg-outline-secondary text-dark">
+          <span class="badge border-secondary border-1 text-secondary" id="update-time">Update: N/A</span>
+        </span>
+      </h1>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
+
+            <!-- Balance -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card balance-card">
+                <div class="card-body">
+                  <h5 class="card-title">Deposit Balance <span class="badge bg-outline-secondary text-dark"
+                      id="wallet-token"></span>
+                  </h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-currency-dollar"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 id="deposit-balance">$0.00</h6>
+                      <span class="text-primary small pt-1 fw-bold" id="wallet-balance">$0.000</span> <span
+                        class="text-muted small pt-2 ps-1">(wallet)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Balance -->
+
+            <!-- Remaining Value -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card remaining-value-card">
+                <div class="card-body">
+                  <h5 class="card-title">Remaining Value <span class="badge bg-outline-secondary text-dark"
+                      id="remaining-value-unit"></span></h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-bootstrap-reboot"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 id="remaining-value">$0.00</h6>
+                      <span class="text-success small pt-1 fw-bold" id="locked-value">$0.000</span>
+                      <span class="text-muted small pt-2 ps-1">(locked)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Remaining Value -->
+
+            <!-- Pair Reserves -->
+            <div class="col-xxl-4 col-xl-12">
+              <div class="card info-card locked-value-card">
+                <div class="card-body">
+                  <h5 class="card-title">Pair Reserves <span class="badge bg-outline-secondary text-dark"
+                      id="token-pair"></span>
+                  </h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-arrow-left-right"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 id="token-pair-reserves">XXX / XXX</h6>
+                      <span class="text-danger small pt-1 fw-bold" id="token-pair-count">0</span>
+                      <span class="text-muted small pt-2 ps-1">pairs created</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Pair Reserves -->
+
+            <!-- Isolated Positions -->
+            <div class="col-12">
+              <div class="card current-positions overflow-auto">
+                <div class="card-body">
+                  <h5 class="card-title">Positions <span>| Isolated</span></h5>
+                  <table class="table table-borderless datatable" id="isolated-position-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Pos#</th>
+                        <th scope="col">Trading pair</th>
+                        <th scope="col">Col. Amount</th>
+                        <th scope="col">Col. Worth Value</th>
+                        <th scope="col">Position Value</th>
+                        <th scope="col">Leverage</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">###</th>
+                        <td>XXX / XXX</td>
+                        <td>000</td>
+                        <td>000</td>
+                        <td>000</td>
+                        <td>0x</td>
+                        <td>
+                          <h6><span class="badge bg-warning">N/A</span></h6>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div><!-- End Isolated Positions -->
+
+          </div>
+        </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        <div class="col-lg-4">
+          <!-- Deposit & Withdrawal -->
+          <div class="card">
+            <div class="card-body pb-0">
+              <h5 class="card-title">Deposit & Withdrawal</h5>
+              <form class="row g-3">
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <select id="deposit-token-select" class="form-select">
+                      <option value="">Select Token</option>
+                      <option value="DAI" selected>DAI</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="col-md-12">
+                    <input type="text" class="form-control" id="deposit-token-amount" placeholder="Amount">
+                  </div>
+                </div>
+                <div class="col-md-1">
+                  <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary" id="deposit-btn">Deposit</button>
+                  </div>
+                </div>
+              </form>
+              <form class="row g-3">
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <select id="withdraw-token-select" class="form-select">
+                      <option value="">Select Token</option>
+                      <option value="DAI" selected>DAI</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="col-md-12">
+                    <input type="text" class="form-control" id="withdraw-token-amount" placeholder="Amount">
+                  </div>
+                </div>
+                <div class="col-md-1">
+                  <div class="col-md-12">
+                    <button type="submit" class="btn btn-danger" id="withdraw-btn">Withdraw</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div><!-- End Deposit & Withdrawal -->
+
+          <!-- Calculation -->
+          <div class="card">
+            <div class="card-body pb-0">
+              <h5 class="card-title">Pre-Calculate Position
+                <span class="text-end" id="calculate-result"></span>
+              </h5>
+              <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="cta-tab" data-bs-toggle="tab" data-bs-target="#cta" type="button"
+                    role="tab" aria-controls="cta" aria-selected="true">Collateral => Target</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="tca-tab" data-bs-toggle="tab" data-bs-target="#tca" type="button"
+                    role="tab" aria-controls="tca" aria-selected="false">Target => Collateral</button>
+                </li>
+              </ul>
+              <div class="tab-content pt-2" id="myTabContent">
+                <div class="tab-pane fade show active" id="cta" role="tabpanel" aria-labelledby="cta-tab">
+                  <form class="row g-3">
+                    <div class="col-md-4">
+                      <select id="collateral-select-forwards" class="form-select">
+                        <option value="">Collateral</option>
+                        <option value="DAI" selected>DAI</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <select id="target-select-forwards" class="form-select">
+                        <option value="">Target</option>
+                        <option value="WETH" selected>WETH</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <select id="leverage-select-forwards" class="form-select">
+                        <option value="" selected>Leverage</option>
+                        <option value="1">1x</option>
+                        <option value="2">2x</option>
+                        <option value="3">3x</option>
+                        <option value="4">4x</option>
+                        <option value="5">5x</option>
+                        <option value="6">6x</option>
+                        <option value="7">7x</option>
+                        <option value="8">8x</option>
+                        <option value="9">9x</option>
+                        <option value="10">10x</option>
+                      </select>
+                    </div>
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" id="collateral-amount-forwards"
+                        placeholder="Collateral Token Amount">
+                    </div>
+                    <div class="col-md-5">
+                      <div class="text-end">
+                        <button type="submit" class="btn btn-info" id="calculate-btn-forwards">Calculate</button>
+                        <button type="reset" class="btn btn-outline-secondary" id="reset-swap-btn">Reset</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="tab-pane fade" id="tca" role="tabpanel" aria-labelledby="tca-tab">
+                  <form class="row g-3">
+                    <div class="col-md-4">
+                      <select id="target-select-reverse" class="form-select">
+                        <option value="">Target</option>
+                        <option value="WETH" selected>WETH</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <select id="collateral-select-reverse" class="form-select">
+                        <option value="">Collateral</option>
+                        <option value="DAI" selected>DAI</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <select id="leverage-select-reverse" class="form-select">
+                        <option value="" selected>Leverage</option>
+                        <option value="1">1x</option>
+                        <option value="2">2x</option>
+                        <option value="3">3x</option>
+                        <option value="4">4x</option>
+                        <option value="5">5x</option>
+                        <option value="6">6x</option>
+                        <option value="7">7x</option>
+                        <option value="8">8x</option>
+                        <option value="9">9x</option>
+                        <option value="10">10x</option>
+                      </select>
+                    </div>
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" id="target-amount-reverse"
+                        placeholder="Target Position Value">
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="sell-checkbox">
+                        <label class="form-check-label">SELL</label>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-info" id="calculate-btn-reverse">Calculate</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <br>
+            </div>
+          </div><!-- End Calculation -->
+
+          <!-- Swap Order -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Request Swap Order</h5>
+              <form class="row g-3">
+                <div class="col-md-4">
+                  <select id="collateral-token-select" class="form-select">
+                    <option value="">Select Collateral</option>
+                    <option value="DAI" selected>DAI</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <select id="target-token-select" class="form-select">
+                    <option value="">Select Target</option>
+                    <option value="WETH" selected>WETH</option>
+                  </select>
+                </div>
+
+                <div class="col-md-4">
+                  <select id="position-mode-select" class="form-select">
+                    <option value="">Poistion Mode</option>
+                    <option value="1" selected>ISOLATED Mode</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <select id="position-leverage-select" class="form-select">
+                    <option value="" selected>Leverage</option>
+                    <option value="1">1x</option>
+                    <option value="2">2x</option>
+                    <option value="3">3x</option>
+                    <option value="4">4x</option>
+                    <option value="5">5x</option>
+                    <option value="6">6x</option>
+                    <option value="7">7x</option>
+                    <option value="8">8x</option>
+                    <option value="9">9x</option>
+                    <option value="10">10x</option>
+                  </select>
+                </div>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" id="swap-token-amount" placeholder="Swap Amount">
+                </div>
+                <div class="col-8">
+                  <input type="text" class="form-control" id="close-position-index" placeholder="Close Position Index #"
+                    disabled>
+                </div>
+                <div class="col-4 form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="close-position-switch" unchecked>
+                  <label class="form-check-label" for="flexSwitchCheckChecked">Close Position<br>(ISOLATED)</label>
+                </div>
+                <div class="col-md-12">
+                  <div class="text-end">
+                    <button type="submit" class="btn btn-info" id="request-swap-btn">Request Swap</button>
+                    <button type="reset" class="btn btn-outline-secondary" id="reset-swap-btn">Reset</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div><!-- End Swap Order -->
+
+        </div><!-- End Right side columns -->
+
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Custom JS File -->
+  <script src="js/exch-isolated-mode.js"></script>
+  <script src="js/contract-abi.js"></script>
+  <script src="js/contract-config.js"></script>
+  <script src="js/components-isolated.js"></script>
+
+</body>
+
+</html>
