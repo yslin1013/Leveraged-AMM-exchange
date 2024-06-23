@@ -71,7 +71,7 @@ Ran 2 test suites in 395.11ms (766.41ms CPU time): 40 tests passed, 0 failed, 0 
 | Total                                    | 98.96% (191/193) | 95.54% (300/314) | 83.33% (60/72) | 100.00% (39/39) |
 ```
 
-### Deploy contracts on Local Network
+### Deploy Contracts on Local Network
 * To use the Web GUI, you should deploy the contracts on local blockchain network by [Anvil](https://book.getfoundry.sh/reference/anvil/) in `Foundry`.
   - **src/ILeveragedAMMExchange.sol**
   - **src/LeveragedAMMExchangeCrossMode.sol**
@@ -79,7 +79,7 @@ Ran 2 test suites in 395.11ms (766.41ms CPU time): 40 tests passed, 0 failed, 0 
   - **src/tests/MyToken.sol**
 * Firstly, open another terminal and execute `Anvil` to run local network (by default setting).
 * Make sure you have [Metamask](https://metamask.io/) installed in the web browser
-  - Change the network setting to `Local` (RPC URL => [http://127.0.0.1](http://127.0.0.1:8545))
+  - Change the network setting to `Local` (RPC URL => [http://127.0.0.1:8545](http://127.0.0.1:8545))
 ```bash
 $ anvil
 ```
