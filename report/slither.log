@@ -1,15 +1,17 @@
 INFO:Detectors:
-LeveragedAMMExchange.deposit(address,uint256) (src/LeveragedAMMExchange.sol#133-137) ignores return value by IERC20Metadata(collateralToken).transferFrom(msg.sender,address(this),amount) (src/LeveragedAMMExchange.sol#134)
-LeveragedAMMExchange.withdraw(address,uint256) (src/LeveragedAMMExchange.sol#142-149) ignores return value by IERC20Metadata(collateralToken).transfer(msg.sender,amount) (src/LeveragedAMMExchange.sol#147)
+LeveragedAMMExchangeCrossMode.deposit(address,uint256) (src/LeveragedAMMExchangeCrossMode.sol#56-60) ignores return value by IERC20Metadata(collateralToken).transferFrom(msg.sender,address(this),amount) (src/LeveragedAMMExchangeCrossMode.sol#58)
+LeveragedAMMExchangeCrossMode.withdraw(address,uint256) (src/LeveragedAMMExchangeCrossMode.sol#65-72) ignores return value by IERC20Metadata(collateralToken).transfer(msg.sender,amount) (src/LeveragedAMMExchangeCrossMode.sol#70)
+LeveragedAMMExchangeIsolatedMode.deposit(address,uint256) (src/LeveragedAMMExchangeIsolatedMode.sol#56-60) ignores return value by IERC20Metadata(collateralToken).transferFrom(msg.sender,address(this),amount) (src/LeveragedAMMExchangeIsolatedMode.sol#58)
+LeveragedAMMExchangeIsolatedMode.withdraw(address,uint256) (src/LeveragedAMMExchangeIsolatedMode.sol#65-72) ignores return value by IERC20Metadata(collateralToken).transfer(msg.sender,amount) (src/LeveragedAMMExchangeIsolatedMode.sol#70)
 Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
 INFO:Detectors:
-LeveragedAMMExchange.positionsIsolated (src/LeveragedAMMExchange.sol#86) is never initialized. It is used in:
-        - LeveragedAMMExchange.getPositionWorthValue(address,address,address) (src/LeveragedAMMExchange.sol#226-235)
-        - LeveragedAMMExchange.getPositionIsolated(address,address,address,uint256) (src/LeveragedAMMExchange.sol#257-264)
-        - LeveragedAMMExchange.getPositionsIsolatedLength(address,address,address) (src/LeveragedAMMExchange.sol#271-278)
-        - LeveragedAMMExchange.getAccountRemainingValue(address,address,address) (src/LeveragedAMMExchange.sol#366-378)
-        - LeveragedAMMExchange._swapIsolatedOpen(address,address,uint256,uint8) (src/LeveragedAMMExchange.sol#436-463)
-        - LeveragedAMMExchange._swapIsolatedClose(address,address,uint256) (src/LeveragedAMMExchange.sol#469-485)
+LeveragedAMMExchangeIsolatedMode.positionsIsolated (src/LeveragedAMMExchangeIsolatedMode.sol#30) is never initialized. It is used in:
+        - LeveragedAMMExchangeIsolatedMode.getPositionWorthValue(address,address,address) (src/LeveragedAMMExchangeIsolatedMode.sol#143-151)
+        - LeveragedAMMExchangeIsolatedMode.getPositionIsolated(address,address,address,uint256) (src/LeveragedAMMExchangeIsolatedMode.sol#159-166)
+        - LeveragedAMMExchangeIsolatedMode.getPositionsIsolatedLength(address,address,address) (src/LeveragedAMMExchangeIsolatedMode.sol#173-180)
+        - LeveragedAMMExchangeIsolatedMode.getAccountRemainingValue(address,address,address) (src/LeveragedAMMExchangeIsolatedMode.sol#268-278)
+        - LeveragedAMMExchangeIsolatedMode._swapIsolatedOpen(address,address,uint256,uint8) (src/LeveragedAMMExchangeIsolatedMode.sol#287-314)
+        - LeveragedAMMExchangeIsolatedMode._swapIsolatedClose(address,address,uint256) (src/LeveragedAMMExchangeIsolatedMode.sol#320-336)
 Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
 INFO:Detectors:
 MyToken.constructor(string,string,uint8,uint256)._name (src/tests/MyToken.sol#9) shadows:
@@ -18,20 +20,15 @@ MyToken.constructor(string,string,uint8,uint256)._symbol (src/tests/MyToken.sol#
         - ERC20._symbol (lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol#42) (state variable)
 Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
 INFO:Detectors:
-Reentrancy in LeveragedAMMExchange.deposit(address,uint256) (src/LeveragedAMMExchange.sol#133-137):
-        External calls:
-        - IERC20Metadata(collateralToken).transferFrom(msg.sender,address(this),amount) (src/LeveragedAMMExchange.sol#134)
-        State variables written after the call(s):
-        - balances[msg.sender][collateralToken] += amount (src/LeveragedAMMExchange.sol#135)
-Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
-INFO:Detectors:
 Pragma version^0.8.20 (lib/openzeppelin-contracts/contracts/interfaces/draft-IERC6093.sol#3) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
 Pragma version^0.8.20 (lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol#4) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
 Pragma version^0.8.20 (lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol#4) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
 Pragma version^0.8.20 (lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol#4) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
 Pragma version^0.8.20 (lib/openzeppelin-contracts/contracts/utils/Context.sol#4) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
 Pragma version^0.8.20 (lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol#4) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
-Pragma version^0.8.20 (src/LeveragedAMMExchange.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version^0.8.20 (src/ILeveragedAMMExchange.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version^0.8.20 (src/LeveragedAMMExchangeCrossMode.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version^0.8.20 (src/LeveragedAMMExchangeIsolatedMode.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
 Pragma version^0.8.20 (src/tests/MyToken.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
 solc-0.8.23 is not recommended for deployment
 Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
@@ -39,17 +36,29 @@ INFO:Detectors:
 Variable MyToken.DECIMALS (src/tests/MyToken.sol#7) is not in mixedCase
 Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
 INFO:Detectors:
-Variable LeveragedAMMExchange.getPairPrice(address,address).decimalsTokenA (src/LeveragedAMMExchange.sol#286) is too similar to LeveragedAMMExchange.getPairPrice(address,address).decimalsTokenB (src/LeveragedAMMExchange.sol#287)
-Variable LeveragedAMMExchange.getAmountOutFromIn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#317) is too similar to LeveragedAMMExchange.getAmountOutFromIn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#319)
-Variable LeveragedAMMExchange.getAmountCollateralReturn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#355) is too similar to LeveragedAMMExchange.getAmountInForOut(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#336)
-Variable LeveragedAMMExchange.getAmountCollateralReturn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#355) is too similar to LeveragedAMMExchange.getAmountOutFromIn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#319)
-Variable LeveragedAMMExchange.getAmountInForOut(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#337) is too similar to LeveragedAMMExchange.getAmountOutFromIn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#319)
-Variable LeveragedAMMExchange.getAmountInForOut(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#337) is too similar to LeveragedAMMExchange.getAmountCollateralReturn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#353)
-Variable LeveragedAMMExchange.getAmountOutFromIn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#317) is too similar to LeveragedAMMExchange.getAmountCollateralReturn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#353)
-Variable LeveragedAMMExchange.getAmountInForOut(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#337) is too similar to LeveragedAMMExchange.getAmountInForOut(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#336)
-Variable LeveragedAMMExchange.getAmountOutFromIn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#317) is too similar to LeveragedAMMExchange.getAmountInForOut(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#336)
-Variable LeveragedAMMExchange.getAmountCollateralReturn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchange.sol#355) is too similar to LeveragedAMMExchange.getAmountCollateralReturn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchange.sol#353)
-Variable LeveragedAMMExchange.getPairPrice(address,address).normalizedReserveA (src/LeveragedAMMExchange.sol#288) is too similar to LeveragedAMMExchange.getPairPrice(address,address).normalizedReserveB (src/LeveragedAMMExchange.sol#289)
-Variable LeveragedAMMExchange.createPair(address,address,uint256,uint256).tokenReserveA (src/LeveragedAMMExchange.sol#189) is too similar to LeveragedAMMExchange.createPair(address,address,uint256,uint256).tokenReserveB (src/LeveragedAMMExchange.sol#190)
+Variable LeveragedAMMExchangeCrossMode.getPairPrice(address,address).decimalsTokenA (src/LeveragedAMMExchangeCrossMode.sol#170) is too similar to LeveragedAMMExchangeCrossMode.getPairPrice(address,address).decimalsTokenB (src/LeveragedAMMExchangeCrossMode.sol#171)
+Variable LeveragedAMMExchangeCrossMode.getAmountInForOut(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeCrossMode.sol#221) is too similar to LeveragedAMMExchangeCrossMode.getAmountOutFromIn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeCrossMode.sol#203)
+Variable LeveragedAMMExchangeCrossMode.getAmountOutFromIn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeCrossMode.sol#201) is too similar to LeveragedAMMExchangeCrossMode.getAmountOutFromIn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeCrossMode.sol#203)
+Variable LeveragedAMMExchangeCrossMode.getAmountCollateralReturn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeCrossMode.sol#239) is too similar to LeveragedAMMExchangeCrossMode.getAmountOutFromIn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeCrossMode.sol#203)
+Variable LeveragedAMMExchangeCrossMode.getAmountCollateralReturn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeCrossMode.sol#239) is too similar to LeveragedAMMExchangeCrossMode.getAmountInForOut(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeCrossMode.sol#220)
+Variable LeveragedAMMExchangeCrossMode.getAmountOutFromIn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeCrossMode.sol#201) is too similar to LeveragedAMMExchangeCrossMode.getAmountCollateralReturn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeCrossMode.sol#237)
+Variable LeveragedAMMExchangeCrossMode.getAmountCollateralReturn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeCrossMode.sol#239) is too similar to LeveragedAMMExchangeCrossMode.getAmountCollateralReturn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeCrossMode.sol#237)
+Variable LeveragedAMMExchangeCrossMode.getAmountOutFromIn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeCrossMode.sol#201) is too similar to LeveragedAMMExchangeCrossMode.getAmountInForOut(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeCrossMode.sol#220)
+Variable LeveragedAMMExchangeCrossMode.getAmountInForOut(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeCrossMode.sol#221) is too similar to LeveragedAMMExchangeCrossMode.getAmountCollateralReturn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeCrossMode.sol#237)
+Variable LeveragedAMMExchangeCrossMode.getAmountInForOut(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeCrossMode.sol#221) is too similar to LeveragedAMMExchangeCrossMode.getAmountInForOut(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeCrossMode.sol#220)
+Variable LeveragedAMMExchangeCrossMode.getPairPrice(address,address).normalizedReserveA (src/LeveragedAMMExchangeCrossMode.sol#172) is too similar to LeveragedAMMExchangeCrossMode.getPairPrice(address,address).normalizedReserveB (src/LeveragedAMMExchangeCrossMode.sol#173)
+Variable LeveragedAMMExchangeCrossMode.createPair(address,address,uint256,uint256).tokenReserveA (src/LeveragedAMMExchangeCrossMode.sol#106) is too similar to LeveragedAMMExchangeCrossMode.createPair(address,address,uint256,uint256).tokenReserveB (src/LeveragedAMMExchangeCrossMode.sol#107)
+Variable LeveragedAMMExchangeIsolatedMode.getPairPrice(address,address).decimalsTokenA (src/LeveragedAMMExchangeIsolatedMode.sol#188) is too similar to LeveragedAMMExchangeIsolatedMode.getPairPrice(address,address).decimalsTokenB (src/LeveragedAMMExchangeIsolatedMode.sol#189)
+Variable LeveragedAMMExchangeIsolatedMode.getAmountCollateralReturn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeIsolatedMode.sol#257) is too similar to LeveragedAMMExchangeIsolatedMode.getAmountInForOut(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeIsolatedMode.sol#238)
+Variable LeveragedAMMExchangeIsolatedMode.getAmountOutFromIn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeIsolatedMode.sol#219) is too similar to LeveragedAMMExchangeIsolatedMode.getAmountOutFromIn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeIsolatedMode.sol#221)
+Variable LeveragedAMMExchangeIsolatedMode.getAmountInForOut(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeIsolatedMode.sol#239) is too similar to LeveragedAMMExchangeIsolatedMode.getAmountInForOut(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeIsolatedMode.sol#238)
+Variable LeveragedAMMExchangeIsolatedMode.getAmountCollateralReturn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeIsolatedMode.sol#257) is too similar to LeveragedAMMExchangeIsolatedMode.getAmountOutFromIn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeIsolatedMode.sol#221)
+Variable LeveragedAMMExchangeIsolatedMode.getAmountInForOut(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeIsolatedMode.sol#239) is too similar to LeveragedAMMExchangeIsolatedMode.getAmountCollateralReturn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeIsolatedMode.sol#255)
+Variable LeveragedAMMExchangeIsolatedMode.getAmountOutFromIn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeIsolatedMode.sol#219) is too similar to LeveragedAMMExchangeIsolatedMode.getAmountCollateralReturn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeIsolatedMode.sol#255)
+Variable LeveragedAMMExchangeIsolatedMode.getAmountOutFromIn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeIsolatedMode.sol#219) is too similar to LeveragedAMMExchangeIsolatedMode.getAmountInForOut(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeIsolatedMode.sol#238)
+Variable LeveragedAMMExchangeIsolatedMode.getAmountInForOut(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeIsolatedMode.sol#239) is too similar to LeveragedAMMExchangeIsolatedMode.getAmountOutFromIn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeIsolatedMode.sol#221)
+Variable LeveragedAMMExchangeIsolatedMode.getAmountCollateralReturn(address,address,uint256,uint8).newReserveA (src/LeveragedAMMExchangeIsolatedMode.sol#257) is too similar to LeveragedAMMExchangeIsolatedMode.getAmountCollateralReturn(address,address,uint256,uint8).newReserveB (src/LeveragedAMMExchangeIsolatedMode.sol#255)
+Variable LeveragedAMMExchangeIsolatedMode.getPairPrice(address,address).normalizedReserveA (src/LeveragedAMMExchangeIsolatedMode.sol#190) is too similar to LeveragedAMMExchangeIsolatedMode.getPairPrice(address,address).normalizedReserveB (src/LeveragedAMMExchangeIsolatedMode.sol#191)
+Variable LeveragedAMMExchangeIsolatedMode.createPair(address,address,uint256,uint256).tokenReserveA (src/LeveragedAMMExchangeIsolatedMode.sol#106) is too similar to LeveragedAMMExchangeIsolatedMode.createPair(address,address,uint256,uint256).tokenReserveB (src/LeveragedAMMExchangeIsolatedMode.sol#107)
 Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#variable-names-too-similar
-INFO:Slither:. analyzed (10 contracts with 94 detectors), 28 result(s) found
+INFO:Slither:. analyzed (12 contracts with 94 detectors), 43 result(s) found

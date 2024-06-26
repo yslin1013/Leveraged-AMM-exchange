@@ -54,8 +54,8 @@ contract LeveragedAMMExchangeIsolatedMode is ILeveragedAMMExchange, ReentrancyGu
     /// @param collateralToken The address of the collateral token.
     /// @param amount The amount of collateral tokens to deposit.
     function deposit(address collateralToken, uint256 amount) external nonReentrant {
-        IERC20Metadata(collateralToken).transferFrom(msg.sender, address(this), amount);
         balances[msg.sender][collateralToken] += amount;
+        IERC20Metadata(collateralToken).transferFrom(msg.sender, address(this), amount);
         emit Deposit(msg.sender, collateralToken, amount);
     }
 
