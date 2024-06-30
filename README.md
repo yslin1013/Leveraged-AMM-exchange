@@ -66,14 +66,16 @@ $ forge coverage --ir-minimum --skip src/tests/*.sol script/*.sol
 Ran 2 test suites in 395.11ms (766.41ms CPU time): 40 tests passed, 0 failed, 0 skipped (40 total tests)
 | File                                     | % Lines          | % Statements     | % Branches     | % Funcs         |
 |------------------------------------------|------------------|------------------|----------------|-----------------|
-| src/LeveragedAMMExchangeCrossMode.sol    | 98.95% (94/95)   | 95.45% (147/154) | 84.21% (32/38) | 100.00% (19/19) |
-| src/LeveragedAMMExchangeIsolatedMode.sol | 98.98% (97/98)   | 95.62% (153/160) | 82.35% (28/34) | 100.00% (20/20) |
-| Total                                    | 98.96% (191/193) | 95.54% (300/314) | 83.33% (60/72) | 100.00% (39/39) |
+| src/LeveragedAMMExchange.sol             | 100.00% (50/50)  | 96.77% (90/93)   | 86.36% (19/22) | 100.00% (12/12) |
+| src/LeveragedAMMExchangeCrossMode.sol    | 97.78% (44/45)   | 93.44% (57/61)   | 81.25% (13/16) | 100.00% (7/7)   |
+| src/LeveragedAMMExchangeIsolatedMode.sol | 97.92% (47/48)   | 94.03% (63/67)   | 75.00% (9/12)  | 100.00% (8/8)   |
+| Total                                    | 98.60% (141/143) | 95.02% (210/221) | 82.00% (41/50) | 100.00% (27/27) |
 ```
 
 ### Deploy Contracts on Local Network
 * To use the Web GUI, you should deploy the contracts on local blockchain network by [Anvil](https://book.getfoundry.sh/reference/anvil/) in `Foundry`.
   - **src/ILeveragedAMMExchange.sol**
+  - **src/LeveragedAMMExchange.sol**
   - **src/LeveragedAMMExchangeCrossMode.sol**
   - **src/LeveragedAMMExchangeIsolatedMode.sol**
   - **src/tests/MyToken.sol**
